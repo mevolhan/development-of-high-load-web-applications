@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  app1:
+    build: .                     # соберёт образ из текущего Dockerfile
+    container_name: java-app1
+    environment:
+      - PORT=8080                # внутренний порт приложения
+    ports:
+      - "8081:8080"
+    networks:
+      - backend
+
+  app2:
+    build: .
+    container_name: java-app2
+    environment:
+      - PORT=8080
+    ports:
+      - "8082:8080"
+    networks:
+      - backend
+
+  app3:
+    build: .
+    container_name: java-app3
+    environment:
+      - PORT=8080
+    ports:
+      - "8083:8080"
+    networks:
+      - backend
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-lb
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app1
+      - app2
+      - app3
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
