@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:latest
+    container_name: redis-lab3
+    ports:
+      - "6380:6379"
+    networks:
+      - lab-network
+    restart: unless-stopped
+
+  app:
+    build: .
+    container_name: java-app-lab3
+    ports:
+      - "8084:8084"
+    depends_on:
+      - redis
+    environment:
+      - SPRING_REDIS_HOST=redis
+      - SPRING_REDIS_PORT=6379
+    networks:
+      - lab-network
+    restart: unless-stopped
+
+networks:
+  lab-network:
+    driver: bridge

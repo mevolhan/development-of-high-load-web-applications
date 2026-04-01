@@ -1,0 +1,5 @@
+Показать, что приложение отвечает
+Invoke-RestMethod -Uri http://localhost:8084/api/tasks -Method POST -ContentType "application/json" -Body '{"data":"hello"}'
+
+Запустить несколько запросов подряд (стресс‑тест)
+1..5 | ForEach-Object { Invoke-RestMethod -Uri http://localhost:8084/api/tasks -Method POST -ContentType "application/json" -Body '{"data":"test"}' -ErrorAction SilentlyContinue }
