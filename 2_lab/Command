@@ -1,0 +1,26 @@
+Invoke-WebRequest -Uri "http://localhost/api/counter" -UseBasicParsing
+*Это счетчик counter
+
+Invoke-WebRequest -Method POST -Uri "http://localhost/leaderboard/playerN1?score=N2" -UseBasicParsing
+*Добавление очков игроку, где N1 - номер игрока, N2 - кол-во очков
+
+Invoke-WebRequest -Uri "http://localhost/leaderboard/top?limit=N" -UseBasicParsing
+*Получить топ , где N - кол-во участников в топе
+
+Invoke-WebRequest -Uri "http://localhost/leaderboard/rank/playerN" -UseBasicParsing
+*Получить ранг игрока, где N - это его номер
+
+docker exec -it redis-lab2 redis-cli
+*Подключиться к Redis и посмотреть данные
+
+127.0.0.1:6379> keys *
+*Посмотреть переменные
+
+127.0.0.1:6379> get request_counter
+*Показать счётчик
+
+127.0.0.1:6379> zrange leaderboard 0 -1 withscores
+*Показать топ
+
+exit
+*Выйти
